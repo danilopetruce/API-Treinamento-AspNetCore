@@ -95,6 +95,7 @@ namespace Backoffice.Controllers
         return NotFound(new { message = "Usuário ou senha inválidos" });
 
       var token = TokenService.GenerateToken(user);
+
       // Esconde a senha
       user.Password = "";
       return new
