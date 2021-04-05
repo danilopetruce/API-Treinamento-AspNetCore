@@ -26,18 +26,16 @@ namespace Backoffice.Controllers
     [HttpPost]
     [Route("")]
     [AllowAnonymous]
-    // [Authorize(Roles = "manager")]
+
     public async Task<ActionResult<User>> Post(
         [FromServices] DataContext context,
         [FromBody] User model)
     {
-      // Verifica se os dados são válidos
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
       try
       {
-        // Força o usuário a ser sempre "funcionário"
         model.Role = "employee";
 
         context.Users.Add(model);
@@ -62,11 +60,9 @@ namespace Backoffice.Controllers
         int id,
         [FromBody] User model)
     {
-      // Verifica se os dados são válidos
       if (!ModelState.IsValid)
         return BadRequest(ModelState);
 
-      // Verifica se o ID informado é o mesmo do modelo
       if (id != model.Id)
         return NotFound(new { message = "Usuário não encontrada" });
 
