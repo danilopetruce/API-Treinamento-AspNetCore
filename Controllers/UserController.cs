@@ -11,7 +11,7 @@ using Backoffice.Services;
 
 namespace Backoffice.Controllers
 {
-  [Route("users")]
+  [Route("v1/users")]
   public class UserController : Controller
   {
     [HttpGet]
