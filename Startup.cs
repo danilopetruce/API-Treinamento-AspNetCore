@@ -28,6 +28,7 @@ namespace Shop
     public void ConfigureServices(IServiceCollection services)
     {
 
+      services.AddCors();
       services.AddResponseCompression(options =>
         {
           options.Providers.Add<GzipCompressionProvider>();
