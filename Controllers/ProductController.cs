@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Backoffice.Data;
 using Backoffice.Models;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace Backoffice.Controllers
@@ -14,6 +15,8 @@ namespace Backoffice.Controllers
   {
     [HttpGet]
     [Route("")]
+    [AllowAnonymous]
+
     public async Task<ActionResult<List<Product>>> Get([FromServices] DataContext context)
     {
       var products = await context.Products.Include(x => x.Category).AsNoTracking().ToListAsync();
@@ -22,6 +25,8 @@ namespace Backoffice.Controllers
 
     [HttpGet]
     [Route("{id:int}")]
+    [AllowAnonymous]
+
     public async Task<ActionResult<Product>> GetById([FromServices] DataContext context, int id)
     {
       var product = await context.Products.Include(x => x.Category).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -30,6 +35,7 @@ namespace Backoffice.Controllers
 
     [HttpGet]
     [Route("categories/{id:int}")]
+    [AllowAnonymous]
 
     public async Task<ActionResult<List<Product>>> GetByCategory([FromServices] DataContext context, int id)
     {
@@ -39,6 +45,7 @@ namespace Backoffice.Controllers
 
     [HttpPost]
     [Route("")]
+    [Authorize(Roles = "employee")]
     public async Task<ActionResult<Product>> Post([FromServices] DataContext context, [FromBody] Product model)
     {
       if (ModelState.IsValid)
